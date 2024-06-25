@@ -1,0 +1,86 @@
+# Allgemeine Build-Verzeichnisse
+build/
+dist/
+bin/
+obj/
+
+# Maven
+target/
+
+# Gradle
+.gradle/
+build/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+build/
+dist/
+
+# Ruby
+*.gem
+*.rbc
+.bundle
+.yardoc
+_yardoc/
+.rvm/
+.rbenv/
+.gemsets/
+vendor/bundle/
+
+# Rust
+target/
+
+# Go
+bin/
+obj/
+pkg/
+
+# .NET
+*.dll
+*.exe
+*.pdb
+*.testresults
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.msi
+*.vspx
+*.vspx
+
+# Logs und temporäre Dateien
+*.log
+*.tmp
+*.temp
+*.cache
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+*.class
+
+# IDEs und Editoren
+.vscode/
+.idea/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
