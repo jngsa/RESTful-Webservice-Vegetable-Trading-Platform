@@ -3,12 +3,16 @@
 #include <string>
 
 class Ware {
-public:
+private:
     std::string name;
     double aktuellerWert;
+    double angebotspreis;
 
-    Ware(const std::string& name, double aktuellerWert); // Constructor declaration
-
-    std::string getName() const; // Method to get the name of the ware
-    double getPreis() const;     // Method to get the price of the ware
+public:
+    Ware(const std::string& name, double startWert);
+    std::string getName() const;
+    double getCurrentValue() const;
+    double getAngebotspreis() const;
+    void setAngebotspreis(double angebotspreis);
+    void updatePreis();
 };
