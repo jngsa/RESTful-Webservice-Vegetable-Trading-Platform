@@ -1,27 +1,14 @@
 #pragma once
 
 #include <string>
-#include <ctime>
 
 class Ware {
-private:
-    std::string name;
-    int anzahl;
-    double aktuellerWert;
-    std::time_t letzteAktualisierung;
-
 public:
-    // Constructor
-    Ware(const std::string& name = "", int anzahl = 0, double aktuellerWert = 0.0, std::time_t letzteAktualisierung = std::time(nullptr));
+    std::string name;
+    double aktuellerWert;
 
-    // Getters
-    const std::string& getName() const;
-    int getAnzahl() const;
-    double getAktuellerWert() const;
-    std::time_t getLetzteAktualisierung() const;
+    Ware(const std::string& name, double aktuellerWert); // Constructor declaration
 
-    // Setters
-    void setAnzahl(int anzahl);
-    void setAktuellerWert(double aktuellerWert);
-    void setLetzteAktualisierung(std::time_t letzteAktualisierung);
+    std::string getName() const; // Method to get the name of the ware
+    double getPreis() const;     // Method to get the price of the ware
 };

@@ -1,25 +1,22 @@
 #pragma once
-#include <string>
+
+#include <iostream>
+#include <memory>
+#include <vector>
+#include "ware.hpp"
 
 class NutzerKonto {
 private:
-    std::string benutzername;
-    std::string passwort;
-    double guthaben = 0.0;
+    double guthaben;
+    std::vector<std::shared_ptr<Ware>> inventar;
 
 public:
-    // Constructor
-    NutzerKonto(const std::string& benutzername = "", const std::string& passwort = "");
+    NutzerKonto(double startGuthaben); // Constructor declaration
 
-    // Getters
-    const std::string& getBenutzername() const;
-    const std::string& getPasswort() const;
     double getGuthaben() const;
+    const std::vector<std::shared_ptr<Ware>>& getInventar() const;
 
-    // Setter
-    void setGuthaben(double newGuthaben);
+    void kaufeWare(std::shared_ptr<Ware> ware);
+    void verkaufeWare(std::shared_ptr<Ware> ware);
 };
-
-
-
 
