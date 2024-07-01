@@ -1,31 +1,31 @@
 #include "ware.hpp"
-#include <random>
 
-Ware::Ware(const std::string& name, double startWert)
-    : name(name), aktuellerWert(startWert), angebotspreis(0.0) {
-    // Constructor definition
-}
+Ware::Ware(const std::string& name, float price, int units)
+    : name(name), price(price), units(units) {}
 
 std::string Ware::getName() const {
     return name;
 }
 
-double Ware::getCurrentValue() const {
-    return aktuellerWert;
+float Ware::getPrice() const {
+    return price;
 }
 
-double Ware::getAngebotspreis() const {
-    return angebotspreis;
+int Ware::getUnits() const {
+    return units;
 }
 
-void Ware::setAngebotspreis(double angebotspreis) {
-    this->angebotspreis = angebotspreis;
+void Ware::setPrice(float price) {
+    this->price = price;
 }
 
-void Ware::updatePreis() {
-    static std::default_random_engine generator;
-    static std::normal_distribution<double> distribution(0.0, 0.5);
-    double drift = distribution(generator);
+void Ware::addUnits(int additionalUnits) {
+    units += additionalUnits;
+}
 
-    aktuellerWert *= (1 + drift);
+void Ware::removeUnits(int unitsToRemove) {
+    units -= unitsToRemove;
+    if (units < 0) {
+        units = 0;
+    }
 }

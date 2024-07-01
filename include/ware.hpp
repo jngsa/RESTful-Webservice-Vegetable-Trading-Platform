@@ -5,14 +5,18 @@
 class Ware {
 private:
     std::string name;
-    double aktuellerWert;
-    double angebotspreis;
+    float price;
+    int units;
 
 public:
-    Ware(const std::string& name, double startWert);
+    Ware(const std::string& name, float price, int units);
+
     std::string getName() const;
-    double getCurrentValue() const;
-    double getAngebotspreis() const;
-    void setAngebotspreis(double angebotspreis);
-    void updatePreis();
+    float getPrice() const;
+    int getUnits() const;
+
+    void setPrice(float price);
+    void addUnits(int additionalUnits);
+    void removeUnits(int unitsToRemove);
 };
+

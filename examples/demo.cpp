@@ -1,42 +1,59 @@
-#include "konto.hpp"
-#include "markt.hpp"
 #include <iostream>
-
-void printInventory(const NutzerKonto& konto) {
-    std::cout << "Current Inventory:\n";
-    const auto& inventar = konto.getInventar();
-    for (const auto& ware : inventar) {
-        std::cout << "- " << ware->getName() << ": " << ware->getAngebotspreis() << " (Current Price: " << ware->getCurrentValue() << ")\n";
-    }
-    std::cout << "Guthaben: " << konto.getGuthaben() << " coins\n";
-    std::cout << "-------------------------\n";
-}
+#include "konto.hpp"
+#include "ware.hpp"
+#include "markt.hpp"
 
 int main() {
-    // Create a market
+    // Create a Konto (Account) object for a user
+    Konto konto("Max Mustermann");
+
+    // Display initial account balance
+    std::cout << "Initial Guthaben: " << konto.getGuthaben() << std::endl;
+
+    // Display initial inventory
+    std::cout << "Initial Inventar:" << std::endl;
+    std::vector<Ware> inventar = konto.getInventar();
+    for (const auto& ware : inventar) {
+        std::cout << "- " << ware.getName() << " (Units: " << ware.getUnits() << ")" << std::endl;
+    }
+
+    // Offer a ware for sale
+    std::cout << std::endl << "Angebot:" << std::endl;
+    konto.offerWare("Sonnenblumenöl", 15.0f, 5);
+
+    // Display current offers
+    std::vector<Ware> offers = konto.getOffers();
+    for (const auto& offer : offers) {
+        std::cout << "- " << offer.getName() << " (Price: " << offer.getPrice() << ", Units: " << offer.getUnits() << ")" << std::endl;
+    }
+
+    // Simulate buying a ware from the market
     Markt markt;
+    std::vector<Ware> stocks = markt.getStocks();
 
-    // Create a user account with initial balance
-    NutzerKonto userAccount(1000.0);
+    std::cout << std::endl << "Markt (Stock Prices):" << std::endl;
+    for (const auto& stock : stocks) {
+        std::cout << "- " << stock.getName() << " (Price: " << stock.getPrice() << ", Units: " << stock.getUnits() << ")" << std::endl;
+    }
 
-    // Display initial market prices
-    markt.updatePreise();
-    markt.executeBuyOffer(markt.getWaren()[0], userAccount, 5); // Example transaction
+    // Update stock prices
+    std::cout << std::endl << "Markt nach Preisupdate:" << std::endl;
+    markt.updatePrices();
+    stocks = markt.getStocks();
+    for (const auto& stock : stocks) {
+        std::cout << "- " << stock.getName() << " (Price: " << stock.getPrice() << ", Units: " << stock.getUnits() << ")" << std::endl;
+    }
 
-    // Display initial user inventory
-    printInventory(userAccount);
+    // Simulate depositing and withdrawing money
+    konto.einzahlen(500.0f);
+    std::cout << std::endl << "Guthaben nach Einzahlung: " << konto.getGuthaben() << std::endl;
 
-    // Simulate offering stock for sale
-    userAccount.offerWare("Stock1", 60.0);
-
-    // Display updated user inventory after offering
-    printInventory(userAccount);
-
-    // Simulate buying from the market
-    markt.executeBuyOffer(markt.getWaren()[0], userAccount, 3);
-
-    // Display updated user inventory after buying
-    printInventory(userAccount);
+    bool success = konto.auszahlen(200.0f);
+    if (success) {
+        std::cout << "Auszahlung erfolgreich. Neues Guthaben: " << konto.getGuthaben() << std::endl;
+    } else {
+        std::cout << "Auszahlung nicht möglich wegen unzureichendem Guthaben." << std::endl;
+    }
 
     return 0;
 }

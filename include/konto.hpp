@@ -1,21 +1,31 @@
 #pragma once
 
-
-#include "ware.hpp"
+#include <string>
 #include <vector>
-#include <memory>
+#include "ware.hpp"
 
-class NutzerKonto {
+class Konto {
 private:
-    double guthaben;
-    std::vector<std::shared_ptr<Ware>> inventar;
+    std::string benutzername;
+    float guthaben;
+    std::vector<Ware> inventar;
+    std::vector<Ware> offers;
+    int nextOfferID;
 
 public:
-    NutzerKonto(double startGuthaben);
-    double getGuthaben() const;
-    const std::vector<std::shared_ptr<Ware>>& getInventar() const;
-    void einzahlen(double betrag);
-    bool auszahlen(double betrag);
-    void offerWare(const std::string& wareName, double angebotspreis);
-    bool buyWare(const std::string& wareName, double angebotspreis, int units);
+    Konto(const std::string& benutzername);
+
+    float getGuthaben() const;
+    std::vector<Ware> getInventar() const;
+    std::vector<Ware> getOffers() const;
+    int getNextOfferID() const;
+
+    void einzahlen(float betrag);
+    bool auszahlen(float betrag);
+    void offerWare(const std::string& name, float price, int units);
+    bool buyWare(int offerID, float& totalPrice);
+    void addUnits(const std::string& name, int units);
+    void removeUnits(const std::string& name, int units);
+    Ware* findWare(const std::string& name);
 };
+
