@@ -3,7 +3,6 @@
 #include <stdexcept>
 #include <iostream>
 
-// Initialize the static map konten
 std::vector<Offer> Konto::offers;
 std::unordered_map<std::string, Konto*> Konto::konten;
 
@@ -19,16 +18,15 @@ Konto::Konto(const std::string& benutzername, const std::string& passwort)
         inventar.push_back(Ware(name, 0.0f, 10));
     }
 
-    // Add this Konto object to the static map
     konten[benutzername] = this;
 }
 
 Konto* Konto::getKonto(const std::string& benutzername) {
     auto it = konten.find(benutzername);
     if (it != konten.end()) {
-        return it->second; // Return the pointer to the Konto object
+        return it->second; // Gibt das Konto mit dem eingegebenen Namen zurueck
     }
-    return nullptr; // Return nullptr if Konto with given benutzername is not found
+    return nullptr; // Konto nicht gefunden
 }
 
 std::string Konto::getBenutzername() const {
@@ -56,7 +54,7 @@ void Konto::offerWare(const std::string& name, float price, int units) {
                            [&name](const Ware& ware) { return ware.getName() == name; });
 
     if (it != inventar.end() && units > 0 && price >= 0.0f) {
-        // Check if offering valid
+        // prueft ob genug units im Inventar sind
         validateOffer(*it, units);
 
         getAllOffers().push_back(Offer(benutzername, *it, price, units));
@@ -64,42 +62,34 @@ void Konto::offerWare(const std::string& name, float price, int units) {
 }
 
 bool Konto::buyWare(size_t offerIndex, int units) {
-    // Check if offerIndex is within bounds
+
     if (offerIndex >= getAllOffers().size()) {
-        return false; // Offer index out of bounds, transaction unsuccessful
+        return false; // index existiert nicht
     }
 
     Offer& offer = getAllOffers()[offerIndex];
 
-    // Calculate total price for the requested units
     float totalPrice = offer.getPrice() * units;
 
-    // Check if buyer can afford the purchase
+    // preuft ob genug Guthaben vorhanden ist
     if (getGuthaben() < totalPrice) {
-        return false; // Buyer cannot afford the purchase, transaction unsuccessful
+        return false; 
     }
 
-    // Validate if the requested units are available in the offer
     if (units > offer.getUnits()) {
-        return false; // Not enough units available in the offer, transaction unsuccessful
+        return false; // zu viel units angefordert
     }
 
-    // Deduct totalPrice from buyer's guthaben
-    if (!auszahlen(totalPrice)) {
-        return false; // Failed to withdraw money, transaction unsuccessful
-    }
-
-    // Find the seller's account
     Konto* sellerAccount = getKonto(offer.getBenutzername());
 
     if (!sellerAccount) {
-        return false; // Seller account not found, transaction unsuccessful
+        return false; // Verkaufer nicht gefunden
     }
 
-    // Transfer totalPrice to seller's guthaben
     sellerAccount->einzahlen(totalPrice);
 
-    // Update buyer's inventory: add units
+    // Inventar des Kaufers
+    auszahlen(totalPrice);
     Ware* buyerWare = findWare(offer.getWare().getName());
     if (buyerWare) {
         buyerWare->addUnits(units);
@@ -107,10 +97,10 @@ bool Konto::buyWare(size_t offerIndex, int units) {
         inventar.push_back(Ware(offer.getWare().getName(), offer.getWare().getPrice(), units));
     }
 
-    // Update seller's inventory: remove units
+    // Inventar des Verkaufers
     sellerAccount->removeUnits(offer.getWare().getName(), units);
 
-    // Update offer: decrease units or remove if fully bought
+    // offers array aktualisieren
     int remainingUnits = offer.getUnits() - units;
     if (remainingUnits > 0) {
         offer.setUnits(remainingUnits);
@@ -118,7 +108,7 @@ bool Konto::buyWare(size_t offerIndex, int units) {
         getAllOffers().erase(getAllOffers().begin() + offerIndex);
     }
 
-    return true; // Transaction successful
+    return true; // Kauf erfolgreich
 }
 
 void Konto::addUnits(const std::string& name, int units) {
