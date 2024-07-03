@@ -29,7 +29,7 @@ private:
     std::string passwort;
     float guthaben;
     std::vector<Ware> inventar;
-    static std::vector<Offer> offers; // Static member variable declaration
+    static std::vector<Offer> offers; 
 
     static std::unordered_map<std::string, Konto*> konten;
 
