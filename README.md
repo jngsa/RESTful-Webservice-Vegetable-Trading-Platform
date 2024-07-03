@@ -25,6 +25,8 @@ Testing: Unit-Tests für die Berechnungslogik in C++. Integrationstests für die
 
 Zeitplan (Gantt Diagramm):
 
-![Online_Gantt_20240703](/uploads/8a9e03568aa66ce64964b5b695d8b5a9/Online_Gantt_20240703.png)
+![Zeitplan pro Woche](https://gitlab.informatik.uni-bonn.de/-/project/5068/uploads/9e28a1b2f733ab37c3b7d8a7d34b71f9/Online_Gantt_20240703.png)
+
+
 
 
