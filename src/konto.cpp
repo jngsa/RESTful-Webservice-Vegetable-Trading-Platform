@@ -20,14 +20,14 @@ std::unordered_map<std::string, Ware> Konto::getInventar() const {
     return inventar;
 }
 
-void Konto::sellWare(Markt& markt, const std::string& name, int units) {
+void Konto::sellWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
         throw std::invalid_argument("Units must be positive");
     }
 
     auto it = inventar.find(name);
     if (it != inventar.end() && it->second.getUnits() >= units) {
-        float price = markt.getPrice(name);
+        float price = bank.getPrice(name);
         it->second.removeUnits(units);
         if (it->second.getUnits() == 0) {
             inventar.erase(it);
@@ -38,12 +38,12 @@ void Konto::sellWare(Markt& markt, const std::string& name, int units) {
     }
 }
 
-void Konto::buyWare(Markt& markt, const std::string& name, int units) {
+void Konto::buyWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
         throw std::invalid_argument("Units must be positive");
     }
 
-    float price = markt.getPrice(name);
+    float price = bank.getPrice(name);
     float totalPrice = price * units;
 
     if (getGuthaben() >= totalPrice) {
