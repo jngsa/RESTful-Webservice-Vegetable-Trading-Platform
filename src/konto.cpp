@@ -48,16 +48,20 @@ void Konto::buyWare(Bank& bank, const std::string& name, int units) {
 
     if (getGuthaben() >= totalPrice) {
         auszahlen(totalPrice);
-        auto it = inventar.find(name);
-        if (it != inventar.end()) {
-            it->second.addUnits(units);
-        } else {
-            inventar[name] = Ware(name, price, units);
+
+        // Using emplace to add a new Ware to inventar
+        auto emplaceResult = inventar.emplace(name, Ware(name, price, units));
+
+        // Check if the element was successfully inserted or already existed
+        if (!emplaceResult.second) {
+            // Handle the case where the element already existed
+            emplaceResult.first->second.addUnits(units);
         }
     } else {
         throw std::invalid_argument("Not enough guthaben to buy ware");
     }
 }
+
 
 void Konto::einzahlen(float betrag) {
     if (betrag > 0) {
