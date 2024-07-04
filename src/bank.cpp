@@ -12,7 +12,11 @@ Bank::Bank()
     };
 
     for (const auto& name : funnyNames) {
-        float startPrice = 10.0f * distribution(generator) + 10.0f; // Ensure start price is positive
+        float startPrice;
+        do {
+            startPrice = 10.0f * distribution(generator) + 10.0f; // Generate a new start price
+        } while (startPrice <= 0.0f); // Repeat until startPrice is positive
+
         float mu = 0.05f; // Assume 5% drift
         float sigma = 0.2f; // Assume 20% volatility
         float dt = 1.0f; // One time step
@@ -22,6 +26,7 @@ Bank::Bank()
         stocks.push_back(Ware(name, price, 100));
     }
 }
+
 
 float Bank::getPrice(const std::string& name) const {
     for (const auto& ware : stocks) {
