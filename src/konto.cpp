@@ -22,25 +22,32 @@ std::unordered_map<std::string, Ware> Konto::getInventar() const {
 
 void Konto::sellWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
-        throw std::invalid_argument("Units must be positive");
+        throw std::invalid_argument("Anzahl muss positiv sein");
     }
 
     auto it = inventar.find(name); // im Inventar nach Ware suchen
-    if (it != inventar.end() && it->second.getUnits() >= units) { // Ware gefunden, vorhandene Units sind genug
-        float price = bank.getPrice(name); // Preis vom Bank abrufen
-        it->second.removeUnits(units); 
-        if (it->second.getUnits() == 0) { // keine Units im Inventar mehr
-            inventar.erase(it);
+
+    // Ware im Inventar vorhanden
+    if (it != inventar.end()) {
+        if (it->second.getUnits() >= units) { // vorhandene Units sind genug
+            float price = bank.getPrice(name); // preis von der Bank abrufen
+            it->second.removeUnits(units);
+            if (it->second.getUnits() == 0) { // keine Einheiten mehr im Inventar
+                inventar.erase(it);
+            }
+            einzahlen(units * price); 
+        } else {
+            throw std::invalid_argument("Nicht genug Einheiten im Inventar");
         }
-        einzahlen(units * price); 
     } else {
-        throw std::invalid_argument("Not enough units in inventory or ware not found");
+        throw std::invalid_argument("Ware nicht gefunden");
     }
+
 }
 
 void Konto::buyWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
-        throw std::invalid_argument("Units must be positive");
+        throw std::invalid_argument("Anzzahl muss positiv sein");
     }
 
     float price = bank.getPrice(name);
@@ -57,7 +64,7 @@ void Konto::buyWare(Bank& bank, const std::string& name, int units) {
             emplaceResult.first->second.addUnits(units);
         }
     } else {
-        throw std::invalid_argument("Not enough guthaben to buy ware");
+        throw std::invalid_argument("Nicht genug Guthaben");
     }
 }
 
