@@ -25,14 +25,14 @@ void Konto::sellWare(Bank& bank, const std::string& name, int units) {
         throw std::invalid_argument("Units must be positive");
     }
 
-    auto it = inventar.find(name);
-    if (it != inventar.end() && it->second.getUnits() >= units) {
-        float price = bank.getPrice(name);
-        it->second.removeUnits(units);
-        if (it->second.getUnits() == 0) {
+    auto it = inventar.find(name); // im Inventar nach Ware suchen
+    if (it != inventar.end() && it->second.getUnits() >= units) { // Ware gefunden, vorhandene Units sind genug
+        float price = bank.getPrice(name); // Preis vom Bank abrufen
+        it->second.removeUnits(units); 
+        if (it->second.getUnits() == 0) { // keine Units im Inventar mehr
             inventar.erase(it);
         }
-        einzahlen(units * price);
+        einzahlen(units * price); 
     } else {
         throw std::invalid_argument("Not enough units in inventory or ware not found");
     }
@@ -49,12 +49,11 @@ void Konto::buyWare(Bank& bank, const std::string& name, int units) {
     if (getGuthaben() >= totalPrice) {
         auszahlen(totalPrice);
 
-        // Using emplace to add a new Ware to inventar
+        // versuche ein neues Ware-Objekt einzufuegen
         auto emplaceResult = inventar.emplace(name, Ware(name, price, units));
 
-        // Check if the element was successfully inserted or already existed
+        // wenn Ware schon im Inventar existiert
         if (!emplaceResult.second) {
-            // Handle the case where the element already existed
             emplaceResult.first->second.addUnits(units);
         }
     } else {
