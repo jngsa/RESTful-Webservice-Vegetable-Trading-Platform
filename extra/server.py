@@ -10,6 +10,7 @@ import ware
 app = FastAPI()
 
 konto_liste: Dict[str, konto.Konto] = {} # Verzeichnis aller existierenden Kontos
+bank_existenz = []
 
 @app.post("/create_konto/")
 def create_konto(benutzername : str, passwort : str):
@@ -17,7 +18,7 @@ def create_konto(benutzername : str, passwort : str):
     neues_konto = konto.Konto(benutzername, passwort)
     konto_liste[benutzername] = neues_konto
     return {
-        "message" : "Das Konto wurde erfolgreich erstellt.",
+        "message" : "✓✓✓ Das Konto wurde erfolgreich erstellt. ✓✓✓",
         "benutzername" : benutzername
     }
 
@@ -28,17 +29,33 @@ def login(benutzername : str, passwort : str):
         aktuelles_konto = konto_liste[benutzername]
         if aktuelles_konto.getPasswort() == passwort:
             return {
-                "message" : "Einloggen erfolgreich. Wilkommen zurück!",
+                "message" : "✓✓✓ Einloggen erfolgreich. Wilkommen zurück! ✓✓✓",
                 "benutzername" : benutzername
             }
         
         else:
-            raise HTTPException(status_code=401, detail="Falsches Passwort.")
+            raise HTTPException(status_code=401, detail="xxx Falsches Passwort. xxx")
     
     else:
-        raise HTTPException(status_code=404, detail="Das Konto mit diesem Benutzername existiert nicht.")
+        raise HTTPException(status_code=404, detail="xxx Das Konto mit diesem Benutzername existiert nicht. xxx")
 
+@app.post("/start/")
+def start():
+    """die Bank initialisieren, falls noch nicht"""
+    if len(bank_existenz) == 0:
+        aktuelle_bank = bank.Bank()
+        bank_existenz.append(aktuelle_bank)
 
+        return {
+        "message" : "✓✓✓ die Bank wurde erfolgreich initialisiert ✓✓✓",
+        }
+    
+    else:
+        aktuelle_bank = bank_existenz[0]
+
+        return {
+            "message" : "✓✓✓ die Bank funktioniert gerade ✓✓✓",
+        }
 
 
 

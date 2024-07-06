@@ -7,7 +7,7 @@
 namespace py = pybind11;
 
 PYBIND11_MODULE(bank, m) {
-    py::class_<Bank>(m, "bank")
+    py::class_<Bank>(m, "Bank")
         .def(py::init<>())
         .def("getPrice", &Bank::getPrice, py::arg("name"))
         .def("getStocks", &Bank::getStocks);
