@@ -21,7 +21,22 @@ def create_konto(benutzername : str, passwort : str):
         "benutzername" : benutzername
     }
 
-
+@app.post("/login/")
+def login(benutzername : str, passwort : str):
+    """Loggt ein Nutzer*in mit eingegebenem Benutzernamen & Passwort ein"""
+    if benutzername in konto_liste:
+        aktuelles_konto = konto_liste[benutzername]
+        if aktuelles_konto.getPasswort() == passwort:
+            return {
+                "message" : "Einloggen erfolgreich. Wilkommen zurück!",
+                "benutzername" : benutzername
+            }
+        
+        else:
+            raise HTTPException(status_code=401, detail="Falsches Passwort.")
+    
+    else:
+        raise HTTPException(status_code=404, detail="Das Konto mit diesem Benutzername existiert nicht.")
 
 
 
