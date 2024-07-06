@@ -129,6 +129,7 @@ def client():
         print("1 - verfügbare Handelsgüter der Bank sehen & kaufen")
         print("2 - meine Handelsgüter verkaufen")
         print("3 - Infos über mein Konto")
+        print("4 - Logout")
 
         wahl = input("Wähle eine Option 1 / 2 / 3 : ")
 
@@ -157,8 +158,11 @@ def client():
 
             time.sleep(5)
 
+        elif wahl == "4":
+            break
+
         else:
-            print("Ungültige Option. Bitte wähle 1, 2 oder 3.")
+            print("Ungültige Option. Bitte wähle 1, 2, 3 oder 4.")
 
 
         
