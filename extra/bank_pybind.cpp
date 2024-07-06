@@ -2,6 +2,7 @@
 #include <pybind11/stl.h>
 
 #include <bank.hpp>
+#include <ware.hpp>
 
 namespace py = pybind11;
 

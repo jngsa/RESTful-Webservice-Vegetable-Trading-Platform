@@ -3,6 +3,8 @@
 #include <string>
 
 #include <konto.hpp>
+#include <ware.hpp>
+#include <bank.hpp>
 
 namespace py = pybind11;
 

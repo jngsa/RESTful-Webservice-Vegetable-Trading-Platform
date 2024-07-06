@@ -34,8 +34,25 @@ def client():
             while not (benutzername and benutzername.strip()):     # falls der eingegebene Benutzername kein Zeichen enthält (empty string)
                 print("Du hast nichts eingegeben!")
                 benutzername = input("Bitte gibt deinen Namen nochmal ein : ")
-        
-            
+
+            passwort = input("Gibt dein Passwort ein : ")
+
+            while not (passwort and passwort.strip()):     # falls das eingegebene Passwort kein Zeichen enthält (empty string)
+                print("Du hast nichts eingegeben!")
+                passwort = input("Bitte gibt dein Passwort nochmal ein : ")
+
+            try:
+                konto_info = create_konto(benutzername, passwort)
+
+                if not konto_info or "benutzername" not in konto_info:
+                    raise Exception ("Ungültige Antwort vom Server: Benutzername nicht gefunden.")       
+
+                print(f"Konto erstellt. Dein Benutzername : {benutzername}")
+
+            except Exception as e:
+                print(f"Fehler : {e}")
+
+
 
 
 
