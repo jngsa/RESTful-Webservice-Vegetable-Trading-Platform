@@ -38,7 +38,16 @@ def start():
         return response.json()
     
     except requests.exceptions.RequestException as e:   # wenn der Server Error zurückgibt
-        raise Exception (f"xxx Fehler beim Erstellen des Kontos: {e} xxx")
+        raise Exception (f"xxx Fehler beim Initialisieren der Bank: {e} xxx")
+
+def mein_konto(benutzername):
+    """Gibt Infos über das Konto vom Server zurück"""
+    try:
+        response = requests.get(f"{BASE_URL}/mein_konto/", params={"benutzername" : benutzername})
+        return response.json()
+    
+    except requests.exceptions.RequestException as e:   # wenn der Server Error zurückgibt
+        raise Exception (f"xxx Fehler beim Empfangen der Infos des Kontos vom Server: {e} xxx")
 
 
 def client():
@@ -103,6 +112,10 @@ def client():
 
             except Exception as e:
                 print(f"xxx Fehler : {e} xxx")
+        
+        else:
+            print("Ungültige Option. Bitte wähle 1 oder 2.")
+
 
     while True:
         try:
@@ -116,6 +129,37 @@ def client():
         print("1 - verfügbare Handelsgüter der Bank sehen & kaufen")
         print("2 - meine Handelsgüter verkaufen")
         print("3 - Infos über mein Konto")
+
+        wahl = input("Wähle eine Option 1 / 2 / 3 : ")
+
+        if wahl == "1":
+            break # temporary placeholder
+
+        elif wahl == "2":
+            break # temporary placeholder
+
+        elif wahl == "3":
+            mein_konto_info = mein_konto(konto_info["benutzername"])
+
+            print("------------------- Konto-Info -------------------")
+            print(f"Benutzername        : {konto_info['benutzername']}")
+            print(f"Aktuelle Guthaben   : {mein_konto_info['guthaben']}")
+
+            print("Meine Waren ; ")
+            print(" ")
+            myInventar = mein_konto_info["inventar"]
+
+            for name, myWare in myInventar.items():
+                print(f"Ware    : {name}")
+                print(f"Preis   : {myWare['price']}")
+                print(f"Units   : {myWare['units']}")
+                print(" ")
+
+            time.sleep(5)
+
+        else:
+            print("Ungültige Option. Bitte wähle 1, 2 oder 3.")
+
 
         
 
