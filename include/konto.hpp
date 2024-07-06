@@ -13,7 +13,7 @@ public:
     std::string getPasswort() const;
     float getGuthaben() const;
     std::unordered_map<std::string, Ware> getInventar() const;
-    bool istInventarEmpty() const;
+    bool istInventarEmpty() const; 
 
     void sellWare(Bank& bank, const std::string& name, int units);
     void buyWare(Bank& bank, const std::string& name, int units);

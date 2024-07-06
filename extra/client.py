@@ -199,7 +199,7 @@ def client():
 
                 print("------------------- Konto-Info -------------------")
                 print(f"Benutzername        : {konto_info['benutzername']}")
-                print(f"POOSE-Coins         : {round(mein_konto_info['guthaben'], 0)}")     # Guthaben wird zu einer Ganzzahl aufgerundet
+                print(f"POOSE-Coins         : {round(mein_konto_info['guthaben'], 0)}")    # Guthaben wird zu einer Ganzzahl aufgerundet
 
                 print("Meine Waren ; ")
                 print(" ")

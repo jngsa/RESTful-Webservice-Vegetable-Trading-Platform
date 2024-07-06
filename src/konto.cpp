@@ -21,7 +21,7 @@ std::unordered_map<std::string, Ware> Konto::getInventar() const {
 }
 
 bool Konto::istInventarEmpty() const {
-    return inventar.empty();
+    return inventar.empty(); 
 }
 
 void Konto::sellWare(Bank& bank, const std::string& name, int units) {
