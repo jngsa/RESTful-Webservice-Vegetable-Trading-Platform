@@ -17,7 +17,6 @@ set(EXTRA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/extra)
 
 # Include directory for header files
 include_directories(${INCLUDE_DIR})
->>>>>>> CMakeLists.txt
 
 # Collect all header and source files using globbing
 file(GLOB_RECURSE HEADER_FILES ${INCLUDE_DIR}/*.hpp)
@@ -56,6 +55,16 @@ add_executable(marktplatz_main ${EXAMPLES_DIR}/demo.cpp ${SOURCE_FILES} ${HEADER
 # Include directories for header files for executable
 target_include_directories(marktplatz_main PRIVATE ${INCLUDE_DIR})
 
+# Link the C++ standard library if necessary (conditionally for GNU/Clang)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_link_libraries(konto PRIVATE stdc++fs)
+    target_link_libraries(bank PRIVATE stdc++fs)
+    target_link_libraries(ware PRIVATE stdc++fs)
+endif()
+
+# Link pybind11 to the main executable (optional based on requirement)
+target_link_libraries(marktplatz_main PRIVATE pybind11::module)
+
 #----------------------------------------------#
 #----------Download and Use GoogleTest---------#
 #----------------------------------------------#
@@ -66,7 +75,7 @@ include(FetchContent)
 # Download GoogleTest (version 1.12.1)
 FetchContent_Declare(
   googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+  URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
 )
 
 # Prevent overriding parent project's compiler/linker settings
@@ -91,15 +100,4 @@ target_include_directories(marktplatz_tests PRIVATE ${INCLUDE_DIR})
 
 # Register the test executable with CTest
 add_test(NAME MarktplatzTest COMMAND marktplatz_tests)
-
-# Ensure linkage with required libraries for the executable
-target_link_libraries(marktplatz_main PRIVATE pybind11::module)
-
-# Ensure linkage with the C++ standard library if necessary
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_link_libraries(konto PRIVATE stdc++fs)
-    target_link_libraries(bank PRIVATE stdc++fs)
-    target_link_libraries(ware PRIVATE stdc++fs)
-endif()
-
 

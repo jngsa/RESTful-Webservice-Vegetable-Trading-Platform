@@ -13,6 +13,5 @@ PYBIND11_MODULE(ware, m) {
         .def("getPrice", &Ware::getPrice)
         .def("getUnits", &Ware::getUnits)
         .def("setPrice", &Ware::setPrice, py::arg("price"))
-        .def("addUnits", &Ware::addUnits, py::arg("additionalUnits"))
-        .def("removeUnits", &Ware::removeUnits, py::arg("unitsToRemove"));
+        .def("updateUnits", &Ware::updateUnits, py::arg("anzahl"));
 }
