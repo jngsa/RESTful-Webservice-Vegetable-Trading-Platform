@@ -58,6 +58,17 @@ def get_bank_waren():
     except requests.exceptions.RequestException as e:   # wenn der Server Error zurückgibt
         raise Exception (f"xxx Fehler beim Empfangen der Infos des Kontos vom Server: {e} xxx")
     
+def kaufen(benutzername, ware_name, units):
+    """Kauft eingegebene Ware"""
+    try:
+        response = requests.post(f"{BASE_URL}/kaufen/", params={"benutzername" : benutzername, "ware_name" : ware_name, "units" : units})
+        response.raise_for_status()  # Wirft eine Ausnahme bei einem Fehler-Statuscode
+        return response.json()
+    
+    except requests.exceptions.RequestException as e:   # wenn der Server Error zurückgibt
+        raise Exception (f"xxx Fehler beim Kaufen: {e} xxx")
+
+
 # ------------------------------------------------
 
 def client():
@@ -144,19 +155,38 @@ def client():
         wahl = input("Wähle eine Option 1 / 2 / 3 : ")
 
         if wahl == "1":
-            bank_response = get_bank_waren()
-            bank_waren = bank_response["stocks"]
-            
-            print("------------------- Kaufseite -------------------")
+            try: 
+                bank_response = get_bank_waren()
+                bank_waren = bank_response["stocks"]
+                
+                print("------------------- Kaufseite -------------------")
 
-            for name, ware_von_bank in bank_waren.items():
-                print("X-----------------------------------X")
-                print(f"Ware    : {name}")
-                print(f"Preis   : {round(ware_von_bank['price'], 0)} POOSE-Coins")      # Preis wird zu einer Ganzzahl aufgerundet
-                print(f"Units   : {ware_von_bank['units']}")
-                print("X-----------------------------------X")
-                print(" ")
-            
+                for name, ware_von_bank in bank_waren.items():
+                    print("X-----------------------------------X")
+                    print(f"Ware    : {name}")
+                    print(f"Preis   : {round(ware_von_bank['price'], 0)} POOSE-Coins")      # Preis wird zu einer Ganzzahl aufgerundet
+                    print(f"Units   : {ware_von_bank['units']}")
+                    print("X-----------------------------------X")
+                    print(" ")
+                
+                ware_name = input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")
+
+                while ware_name not in bank_waren:      # falls eingegebener Name von Ware existiert nicht
+                    print(f"{ware_name} existiert nicht.")
+                    ware_name = input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")
+
+                units = input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")
+
+                while units.isdigit() == False:         # falls Zeichen statt Zahlen eingegeben werden
+                    print("Gibt bitte NUR Zahlen ein!")
+                    units = input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")
+
+                kauf_info = kaufen(benutzername, ware_name, units)
+                print(kauf_info["message"])
+
+            except Exception as e:
+                print(f"Fehler: {e}")
+
             time.sleep(10)
             
 
@@ -164,21 +194,30 @@ def client():
             break # temporary placeholder
 
         elif wahl == "3":
-            mein_konto_info = mein_konto(konto_info["benutzername"])
+            try:
+                mein_konto_info = mein_konto(benutzername)
 
-            print("------------------- Konto-Info -------------------")
-            print(f"Benutzername        : {konto_info['benutzername']}")
-            print(f"POOSE-Coins         : {mein_konto_info['guthaben']}")
+                print("------------------- Konto-Info -------------------")
+                print(f"Benutzername        : {konto_info['benutzername']}")
+                print(f"POOSE-Coins         : {round(mein_konto_info['guthaben'], 0)}")     # Guthaben wird zu einer Ganzzahl aufgerundet
 
-            print("Meine Waren ; ")
-            print(" ")
-            myInventar = mein_konto_info["inventar"]
-
-            for name, myWare in myInventar.items():
-                print(f"Ware    : {name}")
-                print(f"Preis   : {round(myWare['price'], 0)} POOSE-Coins")        # Preis wird zu einer Ganzzahl aufgerundet
-                print(f"Units   : {myWare['units']}")
+                print("Meine Waren ; ")
                 print(" ")
+
+                if mein_konto_info["isEmpty"]:
+                    print("Noch keine Waren!")
+
+                else:
+                    myInventar = mein_konto_info["inventar"]
+
+                    for name, myWare in myInventar.items():
+                        print(f"Ware    : {name}")
+                        print(f"Preis   : {round(myWare['price'], 0)} POOSE-Coins")        # Preis wird zu einer Ganzzahl aufgerundet
+                        print(f"Units   : {myWare['units']}")
+                        print(" ")
+
+            except Exception as e:
+                print(f"Fehler: {e}")
 
             time.sleep(5)
 

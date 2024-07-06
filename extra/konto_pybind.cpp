@@ -15,6 +15,7 @@ PYBIND11_MODULE(konto, m) {
         .def("getPasswort", &Konto::getPasswort)
         .def("getGuthaben", &Konto::getGuthaben)
         .def("getInventar", &Konto::getInventar)
+        .def("istInventarEmpty", &Konto::istInventarEmpty)
         .def("sellWare", &Konto::sellWare, py::arg("bank"), py::arg("name"), py::arg("units"))
         .def("buyWare", &Konto::buyWare, py::arg("bank"), py::arg("name"), py::arg("units"))
         .def("einzahlen", &Konto::einzahlen, py::arg("betrag"))

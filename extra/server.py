@@ -74,8 +74,9 @@ def mein_konto(benutzername : str):
 
     inventar = aktuelles_konto.getInventar()
     myInventar: Dict[str, meineWare] = {}       # Verzeichnis aller besitzten Waren
+    isEmpty = aktuelles_konto.istInventarEmpty()    # prüft, ob Inventar leer ist
 
-    for name, aktuelle_ware in inventar:
+    for name, aktuelle_ware in inventar.items():
         data = {
             "ware_name" : name,
             "price" : aktuelle_ware.getPrice(),
@@ -88,7 +89,8 @@ def mein_konto(benutzername : str):
     return {
         "message" : "Infos über Konto erfolgreich zugegriffen",
         "guthaben" : aktuelles_konto.getGuthaben(),
-        "inventar" : myInventar
+        "inventar" : myInventar,
+        "isEmpty" : isEmpty
     }
 
 @app.get("/bank_waren/")
@@ -120,7 +122,21 @@ def get_bank_waren():
         "stocks" : bank_stocks
     }
 
+@app.post("/kaufen/")
+def kaufen(benutzername : str, ware_name : str, units : int):
+    """Kauft eingegebene Ware"""
 
+    if benutzername not in konto_liste:
+        raise HTTPException(status_code=404, detail="Konto nicht gefunden")
+    
+    aktuelles_konto = konto_liste[benutzername]
+    aktuelle_bank = bank_existenz[0]
+
+    aktuelles_konto.buyWare(aktuelle_bank, ware_name, units)    # Ware(n) von der Bank kaufen
+
+    return {
+        "message" : "Kauf erfolgreich!"
+    }
 
 
 if __name__ == "__main__":
