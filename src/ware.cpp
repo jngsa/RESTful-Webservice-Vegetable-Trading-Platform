@@ -23,19 +23,6 @@ void Ware::setPrice(float price) {
     this->price = price;
 }
 
-void Ware::addUnits(int additionalUnits) {
-    if (additionalUnits < 0) {
-        throw std::invalid_argument("Anzahl darf nicht negativ sein");
-    }
-    units += additionalUnits;
-}
-
-void Ware::removeUnits(int unitsToRemove) {
-    if (unitsToRemove < 0) {
-        throw std::invalid_argument("Anzahl darf nicht negativ sein");
-    }
-    if (unitsToRemove > units) {
-        throw std::invalid_argument("Es duerfen nicht mehr Einheiten entfernt werden als vorhanden sind");
-    }
-    units -= unitsToRemove;
+void Ware::updateUnits(int anzahl) {
+    units += anzahl;
 }

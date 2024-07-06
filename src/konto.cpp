@@ -31,7 +31,7 @@ void Konto::sellWare(Bank& bank, const std::string& name, int units) {
     if (it != inventar.end()) {
         if (it->second.getUnits() >= units) { // vorhandene Units sind genug
             float price = bank.getPrice(name); // preis von der Bank abrufen
-            it->second.removeUnits(units);
+            it->second.updateUnits(-units);
             if (it->second.getUnits() == 0) { // keine Einheiten mehr im Inventar
                 inventar.erase(it);
             }
@@ -43,11 +43,13 @@ void Konto::sellWare(Bank& bank, const std::string& name, int units) {
         throw std::invalid_argument("Ware nicht gefunden");
     }
 
+    // Bank aktualisieren
+    bank.updateUnits(name, units);
 }
 
 void Konto::buyWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
-        throw std::invalid_argument("Anzzahl muss positiv sein");
+        throw std::invalid_argument("Anzahl muss positiv sein");
     }
 
     float price = bank.getPrice(name);
@@ -61,11 +63,14 @@ void Konto::buyWare(Bank& bank, const std::string& name, int units) {
 
         // wenn Ware schon im Inventar existiert
         if (!emplaceResult.second) {
-            emplaceResult.first->second.addUnits(units);
+            emplaceResult.first->second.updateUnits(units);
         }
     } else {
         throw std::invalid_argument("Nicht genug Guthaben");
     }
+
+    // Anzahl der Einheiten von der Bank aktualisieren
+    bank.updateUnits(name, -units);
 }
 
 

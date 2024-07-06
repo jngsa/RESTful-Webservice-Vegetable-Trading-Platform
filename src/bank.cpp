@@ -52,3 +52,14 @@ float Bank::generatePrice(float currentPrice, float mu, float sigma, float dt) {
     // Exponentiate to get the new price
     return std::exp(newLogPrice);
 }
+
+void Bank::updateUnits(const std::string& name, const int& betrag) {
+    for (auto& ware : stocks) {
+        if (ware.getName() == name) {
+            ware.updateUnits(betrag);
+        }
+        else {
+            throw std::invalid_argument("Ware nicht gefunden");
+        }
+    }
+}
