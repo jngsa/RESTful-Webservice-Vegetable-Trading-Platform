@@ -86,9 +86,41 @@ def mein_konto(benutzername : str):
         myInventar[name] = ware_instanz         # Ware zum Inventar hinzufügen
 
     return {
+        "message" : "Infos über Konto erfolgreich zugegriffen",
         "guthaben" : aktuelles_konto.getGuthaben(),
         "inventar" : myInventar
     }
+
+@app.get("/bank_waren/")
+def get_bank_waren():
+    """Gibt alle verkäuflichen Waren von der Bank zurück mit aktuellem Preis"""
+
+    if len(bank_existenz) == 0:
+        raise HTTPException(status_code=404, detail="Bank noch nicht initialisiert")
+    
+    aktuelle_bank = bank_existenz[0]
+    stocks = aktuelle_bank.getStocks()      # stocks enthält ware, die aus dem Namen, Preis und Units besteht  (Stocks -> Ware -> Name, Preis, Units)
+    
+    # stocks from Source-Datei in ein Dict umwandeln
+    
+    bank_stocks: Dict[str, meineWare] = {}
+
+    for güter in stocks:
+        data = {
+            "ware_name" : güter.getName(),
+            "price" : güter.getPrice(),
+            "units" : güter.getUnits()
+        }
+
+        ware_instanz = meineWare(**data)
+        bank_stocks[güter.getName()] = ware_instanz
+
+    return {
+        "message" : "Alle Güter von der Bank erfolgreich zugegriffen",
+        "stocks" : bank_stocks
+    }
+
+
 
 
 if __name__ == "__main__":

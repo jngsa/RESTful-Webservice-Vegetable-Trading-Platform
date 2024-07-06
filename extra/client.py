@@ -49,6 +49,16 @@ def mein_konto(benutzername):
     except requests.exceptions.RequestException as e:   # wenn der Server Error zurückgibt
         raise Exception (f"xxx Fehler beim Empfangen der Infos des Kontos vom Server: {e} xxx")
 
+def get_bank_waren():
+    """Gibt alle verkäuflichen Waren von der Bank zurück mit aktuellem Preis"""
+    try:
+        response = requests.get(f"{BASE_URL}/bank_waren/")
+        return response.json()
+    
+    except requests.exceptions.RequestException as e:   # wenn der Server Error zurückgibt
+        raise Exception (f"xxx Fehler beim Empfangen der Infos des Kontos vom Server: {e} xxx")
+    
+# ------------------------------------------------
 
 def client():
     """Hauptfunktion des Clients"""
@@ -134,7 +144,21 @@ def client():
         wahl = input("Wähle eine Option 1 / 2 / 3 : ")
 
         if wahl == "1":
-            break # temporary placeholder
+            bank_response = get_bank_waren()
+            bank_waren = bank_response["stocks"]
+            
+            print("------------------- Kaufseite -------------------")
+
+            for name, ware_von_bank in bank_waren.items():
+                print("X-----------------------------------X")
+                print(f"Ware    : {name}")
+                print(f"Preis   : {round(ware_von_bank['price'], 0)} POOSE-Coins")      # Preis wird zu einer Ganzzahl aufgerundet
+                print(f"Units   : {ware_von_bank['units']}")
+                print("X-----------------------------------X")
+                print(" ")
+            
+            time.sleep(10)
+            
 
         elif wahl == "2":
             break # temporary placeholder
@@ -144,7 +168,7 @@ def client():
 
             print("------------------- Konto-Info -------------------")
             print(f"Benutzername        : {konto_info['benutzername']}")
-            print(f"Aktuelle Guthaben   : {mein_konto_info['guthaben']}")
+            print(f"POOSE-Coins         : {mein_konto_info['guthaben']}")
 
             print("Meine Waren ; ")
             print(" ")
@@ -152,7 +176,7 @@ def client():
 
             for name, myWare in myInventar.items():
                 print(f"Ware    : {name}")
-                print(f"Preis   : {myWare['price']}")
+                print(f"Preis   : {round(myWare['price'], 0)} POOSE-Coins")        # Preis wird zu einer Ganzzahl aufgerundet
                 print(f"Units   : {myWare['units']}")
                 print(" ")
 
