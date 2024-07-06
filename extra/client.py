@@ -169,17 +169,21 @@ def client():
                     print("X-----------------------------------X")
                     print(" ")
                 
-                ware_name = input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")
+                ware_name = (input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")).strip()
 
                 while ware_name not in bank_waren:      # falls eingegebener Name von Ware existiert nicht
                     print(f"{ware_name} existiert nicht.")
-                    ware_name = input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")
+                    ware_name = (input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")).strip()
 
-                units = input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")
+                units = (input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")).strip()
 
                 while units.isdigit() == False:         # falls Zeichen statt Zahlen eingegeben werden
                     print("Gibt bitte NUR Zahlen ein!")
-                    units = input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")
+                    units = (input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")).strip()
+                
+                while int(units) <= 0 or int(units) > ware_von_bank["units"]:     # falls eingegebene Anzahl zu viel / wenig ist
+                    print("Zu viele oder zu wenig Units eingegeben.")
+                    units = (input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")).strip()
 
                 kauf_info = kaufen(benutzername, ware_name, units)
                 print(kauf_info["message"])
