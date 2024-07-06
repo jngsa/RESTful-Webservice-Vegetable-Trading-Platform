@@ -22,25 +22,32 @@ std::unordered_map<std::string, Ware> Konto::getInventar() const {
 
 void Konto::sellWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
-        throw std::invalid_argument("Units must be positive");
+        throw std::invalid_argument("Anzahl muss positiv sein");
     }
 
-    auto it = inventar.find(name);
-    if (it != inventar.end() && it->second.getUnits() >= units) {
-        float price = bank.getPrice(name);
-        it->second.removeUnits(units);
-        if (it->second.getUnits() == 0) {
-            inventar.erase(it);
+    auto it = inventar.find(name); // im Inventar nach Ware suchen
+
+    // Ware im Inventar vorhanden
+    if (it != inventar.end()) {
+        if (it->second.getUnits() >= units) { // vorhandene Units sind genug
+            float price = bank.getPrice(name); // preis von der Bank abrufen
+            it->second.removeUnits(units);
+            if (it->second.getUnits() == 0) { // keine Einheiten mehr im Inventar
+                inventar.erase(it);
+            }
+            einzahlen(units * price); 
+        } else {
+            throw std::invalid_argument("Nicht genug Einheiten im Inventar");
         }
-        einzahlen(units * price);
     } else {
-        throw std::invalid_argument("Not enough units in inventory or ware not found");
+        throw std::invalid_argument("Ware nicht gefunden");
     }
+
 }
 
 void Konto::buyWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
-        throw std::invalid_argument("Units must be positive");
+        throw std::invalid_argument("Anzzahl muss positiv sein");
     }
 
     float price = bank.getPrice(name);
@@ -49,16 +56,15 @@ void Konto::buyWare(Bank& bank, const std::string& name, int units) {
     if (getGuthaben() >= totalPrice) {
         auszahlen(totalPrice);
 
-        // Using emplace to add a new Ware to inventar
+        // versuche ein neues Ware-Objekt einzufuegen
         auto emplaceResult = inventar.emplace(name, Ware(name, price, units));
 
-        // Check if the element was successfully inserted or already existed
+        // wenn Ware schon im Inventar existiert
         if (!emplaceResult.second) {
-            // Handle the case where the element already existed
             emplaceResult.first->second.addUnits(units);
         }
     } else {
-        throw std::invalid_argument("Not enough guthaben to buy ware");
+        throw std::invalid_argument("Nicht genug Guthaben");
     }
 }
 

@@ -34,7 +34,7 @@ float Bank::getPrice(const std::string& name) const {
             return ware.getPrice();
         }
     }
-    throw std::invalid_argument("Ware not found in bank");
+    throw std::invalid_argument("Ware existiert nicht");
 }
 
 std::vector<Ware> Bank::getStocks() const {
