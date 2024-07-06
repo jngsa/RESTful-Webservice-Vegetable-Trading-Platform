@@ -11,8 +11,7 @@ public:
     int getUnits() const;
 
     void setPrice(float price);
-    void addUnits(int additionalUnits);
-    void removeUnits(int unitsToRemove);
+    void updateUnits(int anzahl);
 
 private:
     std::string name;

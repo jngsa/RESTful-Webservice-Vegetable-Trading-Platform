@@ -6,7 +6,7 @@ Bank::Bank()
     : generator(std::random_device{}()), distribution(0.0f, 1.0f) {
 
     std::vector<std::string> funnyNames = {
-        "Sonnenblumenöl", "Klausurzulassungen", "Lidl", "Aldi",
+        "Sonnenblumenoel", "Klausurzulassungen", "Lidl", "Aldi",
         "Penny", "Edeka", "Rewe", "Boes",
         "Netto", "Ichweissnicht"
     };
@@ -51,4 +51,14 @@ float Bank::generatePrice(float currentPrice, float mu, float sigma, float dt) {
 
     // Exponentiate to get the new price
     return std::exp(newLogPrice);
+}
+
+void Bank::updateUnits(const std::string& name, const int& betrag) {
+    for (auto& ware : stocks) {
+        if (ware.getName() == name) {
+            ware.updateUnits(betrag);
+            return;
+        }
+    }
+    throw std::invalid_argument("Ware nicht gefunden");
 }

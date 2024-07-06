@@ -1,61 +1,73 @@
 #include <iostream>
+#include <string>
 #include "ware.hpp"
-#include "bank.hpp"
 #include "konto.hpp"
+#include "bank.hpp"
 
 int main() {
-    // Create a bank with some initial stocks
+    // Create a Bank object
     Bank bank;
-    std::vector<Ware> stocks = bank.getStocks();
 
-    // Display the initial stocks in the bank
-    std::cout << "Initial stocks in the bank:" << std::endl;
-    for (const auto& ware : stocks) {
-        std::cout << "Name: " << ware.getName() << ", Price: " << ware.getPrice() << ", Units: " << ware.getUnits() << std::endl;
+    // Print initial stock information
+    std::cout << "Initial Bank Stocks:" << std::endl;
+    for (const auto& ware : bank.getStocks()) {
+        std::cout << ware.getName() << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
     }
+    std::cout << std::endl;
 
-    // Create an account
-    Konto account("username", "password");
+    // Create a Konto object
+    Konto konto("Benutzer", "Passwort");
 
-    // Buy some units of a ware from the bank
-    std::string wareToBuy = "Lidl";
-    int unitsToBuy = 10;
-
+    // Try buying 10 units of "Sonnenblumenöl"
     try {
-        account.buyWare(bank, wareToBuy, unitsToBuy);
-        std::cout << "Successfully bought " << unitsToBuy << " units of " << wareToBuy << " from the bank." << std::endl;
-    } catch (const std::invalid_argument& e) {
-        std::cerr << "Failed to buy ware: " << e.what() << std::endl;
+        std::cout << "Buying 10 units of Sonnenblumenöl..." << std::endl;
+        konto.buyWare(bank, "Sonnenblumenoel", 10);
+        std::cout << "Buy successful!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 
-    // Display updated guthaben and inventory in the account
-    std::cout << "Current guthaben in the account: " << account.getGuthaben() << std::endl;
-
-    std::cout << "Current inventory in the account:" << std::endl;
-    auto inventory = account.getInventar();
-    for (const auto& item : inventory) {
-        std::cout << "Name: " << item.second.getName() << ", Units: " << item.second.getUnits() << std::endl;
+    // Print updated stock information
+    std::cout << "Updated Bank Stocks after buying:" << std::endl;
+    for (const auto& ware : bank.getStocks()) {
+        std::cout << ware.getName() << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
     }
+    std::cout << std::endl;
 
-    // Sell some units of a ware to the bank
-    std::string wareToSell = "Lidl";
-    int unitsToSell = 5;
+    // Print Konto's inventory
+    std::cout << "Konto's inventory after buying:" << std::endl;
+    for (const auto& [name, ware] : konto.getInventar()) {
+        std::cout << name << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
+    }
+    std::cout << std::endl;
 
+    // Try selling 5 units of "Sonnenblumenöl"
     try {
-        account.sellWare(bank, wareToSell, unitsToSell);
-        std::cout << "Successfully sold " << unitsToSell << " units of " << wareToSell << " to the bank." << std::endl;
-    } catch (const std::invalid_argument& e) {
-        std::cerr << "Failed to sell ware: " << e.what() << std::endl;
+        std::cout << "Selling 5 units of Sonnenblumenöl..." << std::endl;
+        konto.sellWare(bank, "Sonnenblumenoel", 5);
+        std::cout << "Sell successful!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 
-    // Display updated guthaben and inventory in the account
-    std::cout << "Updated guthaben in the account: " << account.getGuthaben() << std::endl;
-
-    std::cout << "Updated inventory in the account:" << std::endl;
-    inventory = account.getInventar();
-    for (const auto& item : inventory) {
-        std::cout << "Name: " << item.second.getName() << ", Units: " << item.second.getUnits() << std::endl;
+    // Print updated stock information
+    std::cout << "Updated Bank Stocks after selling:" << std::endl;
+    for (const auto& ware : bank.getStocks()) {
+        std::cout << ware.getName() << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
     }
+    std::cout << std::endl;
+
+    // Print Konto's inventory
+    std::cout << "Konto's inventory after selling:" << std::endl;
+    for (const auto& [name, ware] : konto.getInventar()) {
+        std::cout << name << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
+    }
+    std::cout << std::endl;
 
     return 0;
 }

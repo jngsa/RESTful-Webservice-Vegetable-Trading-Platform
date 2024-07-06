@@ -11,6 +11,7 @@ public:
 
     float getPrice(const std::string& name) const;
     std::vector<Ware> getStocks() const;
+    void updateUnits(const std::string& name, const int& betrag);
 
 private:
     std::vector<Ware> stocks;
