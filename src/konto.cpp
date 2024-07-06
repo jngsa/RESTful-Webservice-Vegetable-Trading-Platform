@@ -20,6 +20,10 @@ std::unordered_map<std::string, Ware> Konto::getInventar() const {
     return inventar;
 }
 
+bool Konto::istInventarEmpty() const {
+    return inventar.empty(); 
+}
+
 void Konto::sellWare(Bank& bank, const std::string& name, int units) {
     if (units <= 0) {
         throw std::invalid_argument("Anzahl muss positiv sein");
