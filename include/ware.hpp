@@ -3,19 +3,19 @@
 #include <string>
 
 class Ware {
-private:
-    std::string name;
-    float price;
-    int units; // Added units attribute
-
 public:
-    Ware(const std::string& name, float price, int units = 0); // Added units parameter
+    Ware(const std::string& name, float price, int units);
 
     std::string getName() const;
     float getPrice() const;
-    int getUnits() const; // Getter for units
+    int getUnits() const;
 
     void setPrice(float price);
-    void addUnits(int additionalUnits);
-    void removeUnits(int unitsToRemove);
+    void updateUnits(int anzahl);
+
+private:
+    std::string name;
+    float price;
+    int units;
 };
+

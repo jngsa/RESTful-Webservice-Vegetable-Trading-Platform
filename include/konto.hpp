@@ -1,41 +1,33 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include "ware.hpp"
-#include "offer.hpp"
+#include "bank.hpp" 
+#include <string>
+#include <unordered_map>
 
 class Konto {
 public:
     Konto(const std::string& benutzername, const std::string& passwort);
 
-    static Konto* getKonto(const std::string& benutzername);
-
     std::string getBenutzername() const;
     std::string getPasswort() const;
     float getGuthaben() const;
-    std::vector<Ware> getInventar() const;
-    std::vector<Offer>& getAllOffers();
+    std::unordered_map<std::string, Ware> getInventar() const;
+    bool istInventarEmpty() const; 
 
-    void offerWare(const std::string& name, float price, int units);
-    bool buyWare(size_t offerIndex, int units);
+    void sellWare(Bank& bank, const std::string& name, int units);
+    void buyWare(Bank& bank, const std::string& name, int units);
 
-    void addUnits(const std::string& name, int units);
-    void removeUnits(const std::string& name, int units);
+    void einzahlen(float betrag);
+    bool auszahlen(float betrag);
 
 private:
     std::string benutzername;
     std::string passwort;
     float guthaben;
-    std::vector<Ware> inventar;
-    static std::vector<Offer> offers; // Static member variable declaration
+    std::unordered_map<std::string, Ware> inventar;
 
-    static std::unordered_map<std::string, Konto*> konten;
-
-    Ware* findWare(const std::string& name);
-    void validateOffer(const Ware& ware, int units);
-    void einzahlen(float betrag);
-    bool auszahlen(float betrag);
     void setGuthaben(float betrag);
 };
+
+

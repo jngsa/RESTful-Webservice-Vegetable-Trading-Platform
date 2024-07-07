@@ -1,4 +1,5 @@
 #include "ware.hpp"
+#include <stdexcept>
 
 Ware::Ware(const std::string& name, float price, int units)
     : name(name), price(price), units(units) {}
@@ -16,16 +17,12 @@ int Ware::getUnits() const {
 }
 
 void Ware::setPrice(float price) {
+    if (price < 0) {
+        throw std::invalid_argument("Preis darf nicht negativ sein");
+    }
     this->price = price;
 }
 
-void Ware::addUnits(int additionalUnits) {
-    units += additionalUnits;
-}
-
-void Ware::removeUnits(int unitsToRemove) {
-    units -= unitsToRemove;
-    if (units < 0) {
-        units = 0;
-    }
+void Ware::updateUnits(int anzahl) {
+    units += anzahl;
 }

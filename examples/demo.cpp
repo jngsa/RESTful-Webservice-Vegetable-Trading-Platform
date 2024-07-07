@@ -1,57 +1,73 @@
-#include "konto.hpp"
 #include <iostream>
+#include <string>
+#include "ware.hpp"
+#include "konto.hpp"
+#include "bank.hpp"
 
 int main() {
-    // Create two accounts (Kontos)
-    Konto konto1("Alice", "password1");
-    Konto konto2("Bob", "password2");
+    // Create a Bank object
+    Bank bank;
 
-    // Display initial balances
-    std::cout << "Initial balances:" << std::endl;
-    std::cout << "Alice's balance: " << konto1.getGuthaben() << std::endl;
-    std::cout << "Bob's balance: " << konto2.getGuthaben() << std::endl;
+    // Print initial stock information
+    std::cout << "Initial Bank Stocks:" << std::endl;
+    for (const auto& ware : bank.getStocks()) {
+        std::cout << ware.getName() << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
+    }
+    std::cout << std::endl;
 
-    // Alice offers to sell 5 units of "Lidl" at a price of 15.0
-    konto1.offerWare("Lidl", 15.0f, 5);
+    // Create a Konto object
+    Konto konto("Benutzer", "Passwort");
 
-    // Display Alice's offers
-    std::cout << "\nAlice's Offers:" << std::endl;
-    for (size_t i = 0; i < konto1.getAllOffers().size(); ++i) {
-        const Offer& offer = konto1.getAllOffers()[i];
-        std::cout << "Offer " << i << ": " << offer.getUnits() << " units of " << offer.getWare().getName()
-                  << " at price " << offer.getPrice() << " from " << offer.getBenutzername() << std::endl;
+    // Try buying 10 units of "Sonnenblumenöl"
+    try {
+        std::cout << "Buying 10 units of Sonnenblumenöl..." << std::endl;
+        konto.buyWare(bank, "Sonnenblumenoel", 10);
+        std::cout << "Buy successful!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 
-    // Bob wants to buy 2 units of "Lidl"
-    if (konto2.buyWare(0, 2)) { // Assuming Alice's offer is at index 0
-        std::cout << "\nBob successfully bought 2 units of Lidl from Alice." << std::endl;
-    } else {
-        std::cout << "\nTransaction failed for Bob." << std::endl;
+    // Print updated stock information
+    std::cout << "Updated Bank Stocks after buying:" << std::endl;
+    for (const auto& ware : bank.getStocks()) {
+        std::cout << ware.getName() << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
+    }
+    std::cout << std::endl;
+
+    // Print Konto's inventory
+    std::cout << "Konto's inventory after buying:" << std::endl;
+    for (const auto& [name, ware] : konto.getInventar()) {
+        std::cout << name << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
+    }
+    std::cout << std::endl;
+
+    // Try selling 5 units of "Sonnenblumenöl"
+    try {
+        std::cout << "Selling 5 units of Sonnenblumenöl..." << std::endl;
+        konto.sellWare(bank, "Sonnenblumenoel", 5);
+        std::cout << "Sell successful!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 
-    // Display updated balances
-    std::cout << "\nUpdated balances:" << std::endl;
-    std::cout << "Alice's balance: " << konto1.getGuthaben() << std::endl;
-    std::cout << "Bob's balance: " << konto2.getGuthaben() << std::endl;
-
-    // Display updated inventories and offers
-    std::cout << "\nAlice's Inventory:" << std::endl;
-    for (const auto& ware : konto1.getInventar()) {
-        std::cout << "Name: " << ware.getName() << ", Units: " << ware.getUnits() << std::endl;
+    // Print updated stock information
+    std::cout << "Updated Bank Stocks after selling:" << std::endl;
+    for (const auto& ware : bank.getStocks()) {
+        std::cout << ware.getName() << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
     }
+    std::cout << std::endl;
 
-    std::cout << "\nBob's Inventory:" << std::endl;
-    for (const auto& ware : konto2.getInventar()) {
-        std::cout << "Name: " << ware.getName() << ", Units: " << ware.getUnits() << std::endl;
+    // Print Konto's inventory
+    std::cout << "Konto's inventory after selling:" << std::endl;
+    for (const auto& [name, ware] : konto.getInventar()) {
+        std::cout << name << ": " << ware.getUnits() << " units, "
+                  << ware.getPrice() << " price" << std::endl;
     }
-
-    // Display updated offers
-    std::cout << "\nAlice's Updated Offers:" << std::endl;
-    for (size_t i = 0; i < konto1.getAllOffers().size(); ++i) {
-        const Offer& offer = konto1.getAllOffers()[i];
-        std::cout << i << ": " << offer.getUnits() << " units of " << offer.getWare().getName()
-                  << " at price " << offer.getPrice() << " from " << offer.getBenutzername() << std::endl;
-    }
+    std::cout << std::endl;
 
     return 0;
 }
