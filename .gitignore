@@ -1,9 +1,0 @@
-# Ignoriere Build-Artefakte
-/build/
-/dist/
-/*.egg-info/
-/*.egg/
-/*.pyc
-/*.pyo
-*.pyc
-__pycache__/
