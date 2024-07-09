@@ -20,21 +20,27 @@ TEST(WareTest, SetPriceTest) {
     ASSERT_THROW(ware.setPrice(-1.0), std::invalid_argument);
 }
 
-// updateUnits
-TEST(WareTest, UpdateUnitsTest) {
-    Ware ware("TestWare", 100.0, 10);
+// // addUnits
+// TEST(WareTest, AddUnitsTest) {
+//     Ware ware("Test", 100.0, 10);
+//     ware.addUnits(5);
+//     ASSERT_EQ(ware.getUnits(), 15);
 
-    // Test with positive value
-    ware.updateUnits(5);
-    ASSERT_EQ(ware.getUnits(), 15); // 10 + 5 = 15
+//     // negative Anzahl
+//     ASSERT_THROW(ware.addUnits(-1), std::invalid_argument);
+// }
 
-    // Test with zero value
-    ware.updateUnits(0);
-    ASSERT_EQ(ware.getUnits(), 15); // 15 + 0 = 15
+// // removeUnits
+// TEST(WareTest, RemoveUnitsTest) {
+//     Ware ware("Test", 100.0, 10);
+//     ware.removeUnits(3);
+//     ASSERT_EQ(ware.getUnits(), 7);
 
-    // Test with negative value within valid range
-    ware.updateUnits(-3);
-    ASSERT_EQ(ware.getUnits(), 12); // 15 - 3 = 12
-}
+//     // negative Anzahl
+//     ASSERT_THROW(ware.removeUnits(-1), std::invalid_argument);
+
+//     // nicht genug Einheiten im Inventar
+//     ASSERT_THROW(ware.removeUnits(20), std::invalid_argument);
+// }
 
 

@@ -14,16 +14,10 @@ Bank::Bank()
     for (const auto& name : funnyNames) {
         float startPrice;
         do {
-            startPrice = 10.0f * distribution(generator) + 10.0f; // Generate a new start price
-        } while (startPrice <= 0.0f); // Repeat until startPrice is positive
+            startPrice = 10.0f * distribution(generator) + 10.0f; // positiver Startpreis
+        } while (startPrice <= 0.0f);
 
-        float mu = 0.05f; // Assume 5% drift
-        float sigma = 0.2f; // Assume 20% volatility
-        float dt = 1.0f; // One time step
-
-        float price = generatePrice(startPrice, mu, sigma, dt);
-
-        stocks.push_back(Ware(name, price, 100));
+        stocks.push_back(Ware(name, startPrice, 100)); 
     }
 }
 
@@ -41,16 +35,25 @@ std::vector<Ware> Bank::getStocks() const {
     return stocks;
 }
 
-float Bank::generatePrice(float currentPrice, float mu, float sigma, float dt) {
-    // Generate a normally distributed random variable
-    float Yt = distribution(generator);
+void Bank::updatePrices() {
+    float mu = 0.05f; // Tendenz
+    float sigma = 0.2f; // Standardabweichung
+    float dt = 1.0f; 
+    float sqdt = std::sqrt(dt); 
 
-    // Log-normal price update
-    float logPrice = std::log(currentPrice);
-    float newLogPrice = logPrice + (mu - 0.5f * sigma * sigma) * dt + sigma * std::sqrt(dt) * Yt;
+    for (auto& stock : stocks) {
+        float currentPrice = stock.getPrice();
+        float Yt = distribution(generator); // Zufallsvariable
 
-    // Exponentiate to get the new price
-    return std::exp(newLogPrice);
+        // Randomwalk
+        float newPrice = currentPrice + mu * dt * currentPrice + sigma * sqdt * Yt * currentPrice;
+
+        if (newPrice > 0.0f) {
+            stock.setPrice(newPrice);
+        } else {
+            stock.setPrice(0.01f); 
+        }
+    }
 }
 
 void Bank::updateUnits(const std::string& name, const int& betrag) {
