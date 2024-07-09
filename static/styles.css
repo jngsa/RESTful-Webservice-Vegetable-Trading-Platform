@@ -1,0 +1,167 @@
+/* Grundlegende Stilisierung für den Body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+/* Styling für den Header */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Styling für das Logo im Header */
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* Styling für den Konto-Button im Header */
+.konto-button {
+    background-color: #555;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Styling für den Hauptinhalt */
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling für den Suchcontainer */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* Styling für das Sucheingabefeld */
+.search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px 0 0 20px;
+}
+
+/* Styling für den Suchbutton */
+.search-button {
+    padding: 10px 15px;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+}
+
+/* Styling für das POOSETRADES-Logo */
+.poosetrades-logo {
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Container für den Hauptinhalt (Graph und Info) */
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Styling für den Graph-Container */
+.graph-container {
+    width: 50vw;
+    height: 50vw;
+    max-width: 500px;
+    max-height: 500px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container für Preis und Aktionsbuttons */
+.info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 20px;
+}
+
+/* Styling für den Preis */
+.price {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Container für die Aktionsbuttons */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Allgemeines Styling für Aktionsbuttons */
+.action-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    width: 150px;
+}
+
+/* Spezifisches Styling für den Kaufen-Button */
+.buy-button {
+    background-color: #4CAF50;
+}
+
+/* Spezifisches Styling für den Verkaufen-Button */
+.sell-button {
+    background-color: #f44336;
+}
+
+/* Styling für den Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    width: 100%;
+}
+
+/* Styling für Links im Footer */
+.footer a {
+    color: white;
+    text-decoration: none;
+}
