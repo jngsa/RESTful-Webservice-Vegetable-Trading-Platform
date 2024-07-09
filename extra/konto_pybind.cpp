@@ -9,6 +9,8 @@
 namespace py = pybind11;
 
 PYBIND11_MODULE(konto, m) {
+    py::register_exception<std::invalid_argument>(m, "InvalidArgument");
+
     py::class_<Konto>(m, "Konto")
         .def(py::init<const std::string&, const std::string&>())
         .def("getBenutzername", &Konto::getBenutzername)
