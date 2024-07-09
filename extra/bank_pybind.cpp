@@ -10,5 +10,7 @@ PYBIND11_MODULE(bank, m) {
     py::class_<Bank>(m, "Bank")
         .def(py::init<>())
         .def("getPrice", &Bank::getPrice, py::arg("name"))
-        .def("getStocks", &Bank::getStocks);
+        .def("getStocks", &Bank::getStocks)
+        .def("updateUnits", &Bank::updateUnits, py::arg("name"), py::arg("betrag"))
+        .def("updatePrices", &Bank::updatePrices);
 }
