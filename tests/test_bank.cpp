@@ -5,10 +5,6 @@
 class BankTest : public ::testing::Test {
 protected:
     Bank bank;
-
-    void SetUp() override {
-        bank = Bank();  
-    }
 };
 
 // constructor
