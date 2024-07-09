@@ -15,6 +15,11 @@ set(EXAMPLES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 set(TESTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 set(EXTRA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/extra)
 
+# Set output directory for executables and libraries
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
 # Include directory for header files
 include_directories(${INCLUDE_DIR})
 
@@ -28,25 +33,31 @@ find_package(pybind11 REQUIRED)
 # Collect extra source files for pybind11 modules
 file(GLOB_RECURSE EXTRA_FILES ${EXTRA_DIR}/*.cpp)
 
-# Build Python module named 'konto'
-pybind11_add_module(konto
-  ${EXTRA_DIR}/konto_pybind.cpp  
-  ${SRC_DIR}/konto.cpp
-  ${SRC_DIR}/ware.cpp  # Include ware.cpp to resolve symbols related to Ware
-  ${SRC_DIR}/bank.cpp  # Include bank.cpp to resolve symbols related to Bank
+# Function to add Python module and set its output directory to EXTRA_DIR
+function(add_python_module module_name)
+    pybind11_add_module(${module_name} ${ARGN})
+    set_target_properties(${module_name} PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY ${EXTRA_DIR}
+    )
+endfunction()
+
+# Build Python modules
+add_python_module(konto
+    ${EXTRA_DIR}/konto_pybind.cpp
+    ${SRC_DIR}/konto.cpp
+    ${SRC_DIR}/ware.cpp
+    ${SRC_DIR}/bank.cpp
 )
 
-# Build Python module named 'bank'
-pybind11_add_module(bank
-  ${EXTRA_DIR}/bank_pybind.cpp  
-  ${SRC_DIR}/bank.cpp
-  ${SRC_DIR}/ware.cpp  # Include ware.cpp to resolve symbols related to Ware
+add_python_module(bank
+    ${EXTRA_DIR}/bank_pybind.cpp
+    ${SRC_DIR}/bank.cpp
+    ${SRC_DIR}/ware.cpp
 )
 
-# Build Python module named 'ware'
-pybind11_add_module(ware
-  ${EXTRA_DIR}/ware_pybind.cpp  
-  ${SRC_DIR}/ware.cpp
+add_python_module(ware
+    ${EXTRA_DIR}/ware_pybind.cpp
+    ${SRC_DIR}/ware.cpp
 )
 
 # Add executable target from example/demo.cpp
@@ -68,14 +79,13 @@ target_link_libraries(marktplatz_main PRIVATE pybind11::module)
 #----------------------------------------------#
 #----------Download and Use GoogleTest---------#
 #----------------------------------------------#
-
 # Use CMake's FetchContent module to download GoogleTest
 include(FetchContent)
 
 # Download GoogleTest (version 1.12.1)
 FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
 )
 
 # Prevent overriding parent project's compiler/linker settings
@@ -100,4 +110,3 @@ target_include_directories(marktplatz_tests PRIVATE ${INCLUDE_DIR})
 
 # Register the test executable with CTest
 add_test(NAME MarktplatzTest COMMAND marktplatz_tests)
-
