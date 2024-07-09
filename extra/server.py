@@ -11,6 +11,16 @@ import ware
 
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Erlaubt alle Ursprünge
+    allow_credentials=True,
+    allow_methods=["*"],  # Erlaubt alle Methoden
+    allow_headers=["*"],  # Erlaubt alle Header
+)
+
 konto_liste: Dict[str, konto.Konto] = {} # Verzeichnis aller existierenden Kontos
 bank_existenz = []  # enthält die aktuelle Bank
 
