@@ -20,17 +20,19 @@ body, html {
 }
 
 .container {
-    flex: 0 0 600px;
+    flex: 0 0 800px;
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
+    position: relative;
+    padding: 20px;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 10px 0;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
 }
@@ -41,22 +43,23 @@ header {
 }
 
 .konto-button {
-    background-color: #ffffff;
+    background-color: #007BFF;
     border: none;
-    color: #000;
+    color: white;
     font-weight: bold;
     font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
     padding: 20px;
-    padding-top: 40px; /* Erhöht den oberen Abstand */
 }
 
 .logo-container {
@@ -65,74 +68,95 @@ main {
 
 .logo-image {
     width: 150px;
-    height: auto;
-}
-
-.content-wrapper {
-    display: flex;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 10px;
 }
 
 .such-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5%;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.graph-container {
-    flex: 3;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-right: 1px solid #ddd;
+.such-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-.handel-container {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.markt-container {
+    width: 100%;
+}
+
+#stocks-container {
+    margin-bottom: 20px;
 }
 
 .price-info {
-    font-size: 24px;
-    font-weight: bold;
     margin-bottom: 20px;
+}
+
+.price-value {
+    font-weight: bold;
+}
+
+.available-units {
+    font-size: 14px;
+    color: #888;
 }
 
 .action-buttons {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+}
+
+.buy-container, .sell-container {
+    display: flex;
+    align-items: center;
 }
 
 .action-button {
-    background: none;
+    background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: 0;
 }
 
 .action-button img {
+    width: 40px;
+}
+
+.buy-amount, .sell-amount {
+    width: 60px;
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#guthaben-container {
+    margin: 20px 0;
+}
+
+#inventar-container {
     width: 100%;
-    max-width: 150px;
-    height: auto;
+}
+
+#inventar-anzeige {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 20px; /* Erhöhter vertikaler Abstand */
+    padding: 20px;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
-    height: 100px; /* Erhöhte Fußzeilenhöhe */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer-links {
@@ -145,38 +169,19 @@ footer {
     border: none;
     cursor: pointer;
     font-size: 16px;
+    color: #007BFF;
+}
+
+.footer-button:hover {
+    text-decoration: underline;
 }
 
 .copyright {
     font-size: 14px;
+    color: #888;
 }
 
-.konto-container {
-    text-align: center;
-    margin-top: 50px;
-}
 
-.login-form, .register-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.login-form input, .register-form input {
-    margin-bottom: 10px;
-    padding: 5px;
-    width: 200px;
-}
-
-.login-form button, .register-form button {
-    padding: 5px 10px;
-}
-
-.buy-amount, .sell-amount{
-    width: 25%;
-}
-
-.available-units{
-    font-size: 75%;
+#login-message {
+    display: none;
 }

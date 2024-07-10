@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POOSETRADES</title>
     <link rel="stylesheet" href="styles.css">
-    
 </head>
 <body>
     <div class="outer-container">
@@ -13,7 +12,7 @@
         <div class="container">
             <header>
                 <div class="logo">POOSETRADES</div>
-                <a href="konto.html" class="konto-button">KONTO</a>
+                <a href="login.html" class="konto-button">KONTO</a>
             </header>
 
             <main>
@@ -21,11 +20,12 @@
                     <img src="desings/logo.png" alt="POOSE TRADES" class="logo-image">
                 </div>
                 <div class="such-container">
-                        <input type="text" class="such-input" placeholder="Suchen...">
+                    <input type="text" class="such-input" placeholder="Suchen...">
                 </div>
-                <div class="content-wrapper">
-                    <div class="graph-container">
-                        <p>Graph wird hier angezeigt</p>
+                <div class="markt-container">
+                    <div id="stocks-container">
+                        <h2>Erhältlich: </h2>
+                        <ul id="stocks-anzeige"></ul>
                     </div>
                     <div class="handel-container">
                         <div class="price-info">
@@ -46,6 +46,16 @@
                                 <input type="number" class="sell-amount" min="1" value="1">
                             </div>
                         </div>
+                    </div>
+                    <div id="guthaben-container">
+                        <span>Guthaben: </span>
+                        <span id="guthaben-wert">0</span>
+                        <span>€</span>
+                    </div>
+                    <div id="inventar-container">
+                        <h2>Inventar</h2>
+                        <p id="login-message">Bitte loggen Sie sich ein, um Ihr Inventar zu sehen.</p>
+                        <ul id="inventar-anzeige"></ul>
                     </div>
                 </div>
             </main>
