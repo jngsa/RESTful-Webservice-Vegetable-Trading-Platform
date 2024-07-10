@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POOSETRADES</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    
 </head>
 <body>
     <div class="outer-container">
@@ -28,14 +28,23 @@
                         <p>Graph wird hier angezeigt</p>
                     </div>
                     <div class="handel-container">
-                        <div class="price">Preis: XXXX</div>
+                        <div class="price-info">
+                            <span>Preis: <span class="price-value">0</span></span>
+                            <div class="available-units"><span class="units-value">0</span> verfügbar</div>
+                        </div>
                         <div class="action-buttons">
-                            <button class="action-button buy-button">
-                                <img src="desings/kaufen.png" alt="Kaufen">
-                            </button>
-                            <button class="action-button sell-button">
-                                <img src="desings/verkaufen.png" alt="Verkaufen">
-                            </button>
+                            <div class="buy-container">
+                                <button class="action-button buy-button">
+                                    <img src="desings/kaufen.png" alt="Kaufen">
+                                </button>
+                                <input type="number" class="buy-amount" min="1" value="1">
+                            </div>
+                            <div class="sell-container">
+                                <button class="action-button sell-button">
+                                    <img src="desings/verkaufen.png" alt="Verkaufen">
+                                </button>
+                                <input type="number" class="sell-amount" min="1" value="1">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,5 +62,6 @@
         </div>
         <div class="right-border"></div>
     </div>
+    <script src="script.js" defer></script>
 </body>
 </html>

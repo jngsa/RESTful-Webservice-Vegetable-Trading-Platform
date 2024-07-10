@@ -100,7 +100,7 @@ main {
     justify-content: space-between;
 }
 
-.price {
+.price-info {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -171,4 +171,12 @@ footer {
 
 .login-form button, .register-form button {
     padding: 5px 10px;
+}
+
+.buy-amount, .sell-amount{
+    width: 25%;
+}
+
+.available-units{
+    font-size: 75%;
 }

@@ -3,47 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POOSETRADES - Konto</title>
+    <title>POOSETRADES</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    
 </head>
-<body>
-    <div class="outer-container">
-        <div class="left-border"></div>
-        <div class="container">
-            <header>
-                <div class="logo">POOSETRADES</div>
-            </header>
+<div class="outer-container">
+    <div class="left-border"></div>
+    <div class="container">
+        <header>
+            <div class="logo">POOSETRADES</div>
+            <a href="konto.html" class="konto-button">KONTO</a>
+        </header>
 
-            <main>
-                <div class="konto-container">
-                    <h2>Anmeldung</h2>
-                    <form class="login-form">
-                        <input type="text" placeholder="Benutzername" required>
-                        <input type="password" placeholder="Passwort" required>
-                        <button type="submit">Anmelden</button>
-                    </form>
+        <main>
+            <div id="guthaben-container">
+                <span>Guthaben: </span>
+                <span id="guthaben-wert">0</span>
+                <span>€</span>
+              </div>
+            <div id="inventar-container">
+                <h2>Inventar</h2>
+                <ul id="inventar-anzeige"></ul>
+              </div>
+        </main>
 
-                    <h2>Registrierung</h2>
-                    <form class="register-form">
-                        <input type="text" placeholder="Benutzername" required>
-                        <input type="password" placeholder="Passwort" required>
-                        <button type="submit">Registrieren</button>
-                    </form>
-                </div>
-            </main>
-
-            <footer class="footer">
-                <div class="footer-links">
-                    <button class="footer-button">Hilfe</button>
-                    <button class="footer-button">Kontakt</button>
-                </div>
-                <div class="copyright">
-                    &copy; POOSETRADES
-                </div>
-            </footer>
-        </div>
-        <div class="right-border"></div>
+        <footer class="footer">
+            <div class="footer-links">
+                <button class="footer-button">Hilfe</button>
+                <button class="footer-button">Kontakt</button>
+            </div>
+            <div class="copyright">
+                &copy; POOSETRADES
+            </div>
+        </footer>
     </div>
+    <div class="right-border"></div>
+</div>
+<script src="konto.js" defer></script>
 </body>
 </html>
