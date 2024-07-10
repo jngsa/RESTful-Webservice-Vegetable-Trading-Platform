@@ -2,6 +2,14 @@
 
 **Handelsplatz als RESTful-Webservice**
 
+**Wilkommen beim Gemüse-Handelplatz!**
+
+Nutzer*innen können Brokkoli, Zwiebeln, Knoblauch, Lauch, Blumenkohle, Karotten, Petersilien, Spinat, Kartoffeln und Tomaten.
+
+Die Preise der Gemüse werden periodisch aktualisiert!
+
+Viel Glück beim Kaufen und Verkaufen !! :)
+
 **Anforderungsliste;**
 
 **i) Webservice-Server (Backend)**
