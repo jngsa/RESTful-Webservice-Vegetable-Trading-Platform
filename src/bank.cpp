@@ -6,9 +6,9 @@ Bank::Bank()
     : generator(std::random_device{}()), distribution(0.0f, 1.0f) {
 
     std::vector<std::string> funnyNames = {
-        "Sonnenblumenoel", "Klausurzulassungen", "Lidl", "Aldi",
-        "Penny", "Edeka", "Rewe", "Boes",
-        "Netto", "Ichweissnicht"
+        "Brokkoli", "Zwiebeln", "Knoblauch", "Lauch",
+        "Blumenkohl", "Karotte", "", "Spinat",
+        "Kartoffel", "Tomate"
     };
 
     for (const auto& name : funnyNames) {
