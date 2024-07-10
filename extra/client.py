@@ -227,11 +227,11 @@ def client():
                 if ware_name != "0":
                     while ware_name not in bank_waren:      # falls eingegebener Name von Ware existiert nicht
                         print(f"{ware_name} existiert nicht.")
-                        ware_name = ((input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")).strip()).capitalize
+                        ware_name = ((input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")).strip()).capitalize()
                     
                     while bank_waren[ware_name]['units'] == 0:  # falls eingegebene Ware ausverkauft ist
                         print(f"{ware_name} ist leider ausverkauft.")
-                        ware_name = ((input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")).strip()).capitalize
+                        ware_name = ((input("Gibt den Namen von der Ware ein, die du kaufen möchtest : ")).strip()).capitalize()
 
                     units = (input(f"Wie viele {ware_name} möchtest du kaufen? Gibt eine Anzahl davon ein : ")).strip()
 
