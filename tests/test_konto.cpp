@@ -42,15 +42,15 @@ TEST_F(KontoTest, BuyWare) {
     const float tolerance = 1e-1;
 
     // 10 Einheiten von Sonnenblumenoel kaufen
-    konto.buyWare(bank, "Sonnenblumenoel", 10);
-    EXPECT_NEAR(konto.getGuthaben(), 1000.0f - bank.getPrice("Sonnenblumenoel") * 10, tolerance);
+    konto.buyWare(bank, "Zwiebeln", 10);
+    EXPECT_NEAR(konto.getGuthaben(), 1000.0f - bank.getPrice("Zwiebeln") * 10, tolerance);
     EXPECT_FALSE(konto.istInventarEmpty());
-    EXPECT_EQ(konto.getInventar().at("Sonnenblumenoel").getUnits(), 10);
+    EXPECT_EQ(konto.getInventar().at("Zwiebeln").getUnits(), 10);
 
     // versucht 200 Einheiten davon zu kaufen (nur 90 Units bleiben uebrig)
-    EXPECT_THROW(konto.buyWare(bank, "Sonnenblumenoel", 200), std::invalid_argument);
-    EXPECT_NEAR(konto.getGuthaben(), 1000.0f - bank.getPrice("Sonnenblumenoel") * 10, tolerance);
-    EXPECT_EQ(konto.getInventar().at("Sonnenblumenoel").getUnits(), 10);
+    EXPECT_THROW(konto.buyWare(bank, "Zwiebeln", 200), std::invalid_argument);
+    EXPECT_NEAR(konto.getGuthaben(), 1000.0f - bank.getPrice("Zwiebeln") * 10, tolerance);
+    EXPECT_EQ(konto.getInventar().at("Zwiebeln").getUnits(), 10);
 }
 
 TEST_F(KontoTest, SellWare) {
@@ -58,14 +58,14 @@ TEST_F(KontoTest, SellWare) {
     const float tolerance = 1e-3;
 
     // Kauft 10 Units und verkauft 5 davon
-    konto.buyWare(bank, "Sonnenblumenoel", 10);
-    konto.sellWare(bank, "Sonnenblumenoel", 5);
-    EXPECT_NEAR(konto.getGuthaben(), 1000.0f - bank.getPrice("Sonnenblumenoel") * 5, tolerance);
-    EXPECT_EQ(konto.getInventar().at("Sonnenblumenoel").getUnits(), 5);
+    konto.buyWare(bank, "Zwiebeln", 10);
+    konto.sellWare(bank, "Zwiebeln", 5);
+    EXPECT_NEAR(konto.getGuthaben(), 1000.0f - bank.getPrice("Zwiebeln") * 5, tolerance);
+    EXPECT_EQ(konto.getInventar().at("Zwiebeln").getUnits(), 5);
 
     // nur 5 Units uebrig
-    EXPECT_THROW(konto.sellWare(bank, "Sonnenblumenoel", 15), std::invalid_argument);
-    EXPECT_EQ(konto.getInventar().at("Sonnenblumenoel").getUnits(), 5);
+    EXPECT_THROW(konto.sellWare(bank, "Zwiebeln", 15), std::invalid_argument);
+    EXPECT_EQ(konto.getInventar().at("Zwiebeln").getUnits(), 5);
 
     // nicht existierende Ware verkaufen
     EXPECT_THROW(konto.sellWare(bank, "NonExistentWare", 5), std::invalid_argument);
