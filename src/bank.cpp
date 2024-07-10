@@ -7,7 +7,7 @@ Bank::Bank()
 
     std::vector<std::string> funnyNames = {
         "Brokkoli", "Zwiebeln", "Knoblauch", "Lauch",
-        "Blumenkohl", "Karotte", "", "Spinat",
+        "Blumenkohl", "Karotte", "Petersilie", "Spinat",
         "Kartoffel", "Tomate"
     };
 
