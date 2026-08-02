@@ -1,4 +1,4 @@
-# Projekt3
+# Projekt 3
 
 **Handelsplatz als RESTful-Webservice**
 
@@ -35,11 +35,11 @@ Testing: Unit-Tests für die Berechnungslogik in C++. Integrationstests für die
 
 geplanter Zeitplan:
 
-![Zeitplan pro Woche](https://gitlab.informatik.uni-bonn.de/-/project/5068/uploads/9e28a1b2f733ab37c3b7d8a7d34b71f9/Online_Gantt_20240703.png)
+![Zeitplan pro Woche](examples/geplanter-zeitplan.png)
 
 resultierender Zeitplan (aktuell):
 
-![reality_proj3](/uploads/d565034a709dadfab49b5becc67e3fc9/reality_proj3.png)
+![reality_proj3](/examples/resultierender-zeitplan.png)
 
 
 
